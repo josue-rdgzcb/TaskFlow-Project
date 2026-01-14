@@ -1,0 +1,6 @@
+# Ignorar el entorno virtual y el caché
+venv/
+__pycache__/
+
+# Ignorar el archivo de la base de datos local de SQLite
+tareas.db
