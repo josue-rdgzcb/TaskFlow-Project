@@ -99,7 +99,44 @@ class DBManager:
             for fila in filas
         ]
         return proyectos
+    
+    def obtener_tareas(self, estado=None):
+        """
+        Obtiene tareas de la DB. Aplica un algoritmo de ordenamiento y filtrado.
+        """
+        conn = get_connection()
+        cursor = conn.cursor()
+        
+        sql = "SELECT * FROM tareas"
+        params = []
+        
+        # Algoritmo de Filtrado: Si se pasa un estado, filtramos
+        if estado:
+            sql += " WHERE estado = ?"
+            params.append(estado)
 
+        # Algoritmo de Ordenamiento: Ordenamos por fecha límite (ASCENDENTE)
+        sql += " ORDER BY fecha_limite ASC" 
+
+        cursor.execute(sql, params)
+        filas = cursor.fetchall()
+        conn.close()
+        
+        # Convertimos filas SQL (diccionarios gracias a row_factory) a objetos Tarea (POO)
+        tareas = []
+        for fila in filas:
+            # Recreamos el objeto Tarea a partir de los datos de la DB
+            t = Tarea(
+                titulo=fila['titulo'], 
+                fecha_limite=fila['fecha_limite'],
+                prioridad=fila['prioridad'],
+                proyecto_id=fila['proyecto_id'],
+                descripcion=fila['descripcion'],
+                id=fila['id'],
+                estado=fila['estado']
+            )
+            tareas.append(t)
+        return tareas
 
 # Bloque de prueba: se ejecuta solo si corres este archivo directamente
 if __name__ == '__main__':
