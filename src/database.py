@@ -1,6 +1,6 @@
-import sqlite3              # Librería estándar de Python para trabajar con bases de datos SQLite
-from .modelos import Tarea, Proyecto   # Importa las clases del módulo modelos.py
-import os                   # Librería para manejar archivos y rutas
+import sqlite3                          # Librería estándar de Python para trabajar con bases de datos SQLite
+from .modelos import Tarea, Proyecto    # Importa las clases del módulo modelos.py
+import os                               # Librería para manejar archivos y rutas
 
 # Nombre del archivo físico de la base de datos
 DATABASE_NAME = 'tareas.db'
